@@ -1,0 +1,399 @@
+:root {
+  color-scheme: light;
+  --ink: #17324d;
+  --muted: #667b8f;
+  --line: #e2eaf0;
+  --panel: #fff;
+  --canvas: #f3f7fa;
+  --navy: #102a43;
+  --teal: #138a83;
+  --blue: #3978c5;
+  --orange: #de8c36;
+  --red: #b94a48;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: #f2f6f9; color: var(--ink); }
+.topbar { min-height: 68px; padding: 10px max(16px, calc((100% - 1600px) / 2)); background: linear-gradient(110deg, #123554, #1d5b91); color: #fff; display: flex; align-items: center; gap: 20px; }
+.topbar-brand { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; }
+.brand-mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: #1f8f91; font-size: 20px; font-weight: 800; }
+.topbar h1 { margin: 0; font-size: 20px; letter-spacing: .01em; }
+.eyebrow { margin: 0 0 3px; color: #8399aa; font-size: 10px; font-weight: 800; letter-spacing: .13em; }
+.topbar .eyebrow { color: #a9c3d0; }
+.local-badge { margin-left: auto; color: #d9eee9; font-size: 13px; display: flex; align-items: center; gap: 7px; }
+.local-badge span { width: 7px; height: 7px; border-radius: 50%; background: #48d0a9; }
+.page { width: min(1600px, calc(100% - 32px)); margin: 12px auto 18px; display: grid; gap: 12px; }
+.page > * { min-width: 0; }
+.module-nav { display: flex; gap: 8px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: #eaf0f4; }
+.topbar .module-nav { flex: 0 1 auto; gap: 4px; border-color: #ffffff26; background: #ffffff12; }
+.module-tab { min-height: 36px; padding: 0 16px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.topbar .module-tab { padding: 0 12px; color: #d7e5f0; white-space: nowrap; }
+.module-tab[aria-current="page"] { background: #fff; color: var(--teal); box-shadow: 0 1px 4px #17324d18; }
+.topbar .module-tab[aria-current="page"] { color: #17466f; box-shadow: 0 1px 4px #102a4330; }
+.module-tab:focus-visible { outline: 2px solid #8ccdc7; outline-offset: 1px; }
+body[data-module="data"] .topbar-actions { display: none; }
+body[data-module="pharmacy"] [data-module-view="hospitals"],
+body[data-module="pharmacy"] [data-module-view="data"],
+body[data-module="hospitals"] [data-module-view="pharmacy"],
+body[data-module="hospitals"] [data-module-view="data"],
+body[data-module="data"] [data-module-view="pharmacy"],
+body[data-module="data"] [data-module-view="hospitals"],
+body[data-module="data"] [data-module-view="date-filters"] { display: none; }
+body[data-module="hospitals"] .facility-filter { display: none; }
+.panel, .metric-card { background: var(--panel); border: 1px solid #e1e9ef; border-radius: 10px; box-shadow: 0 3px 12px #1d3b5309; }
+.panel { padding: 14px 16px; }
+.section-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.section-heading h2 { margin: 0; color: var(--ink); font-size: 18px; font-weight: 750; }
+.export-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.topbar-actions { flex: 0 0 auto; margin-left: auto; }
+.topbar-actions .button-secondary { color: #fff; background: #ffffff12; border-color: #ffffff50; }
+.topbar-actions .button-secondary:hover { background: #ffffff24; border-color: #ffffffa0; }
+.facility-legend { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px 12px; color: var(--muted); font-size: 12px; }
+.facility-legend span:not(.facility-legend-note) { display: inline-flex; align-items: center; gap: 5px; }
+.facility-legend i { width: 9px; height: 9px; border-radius: 2px; }
+.facility-current-key { background: #138a83; }
+.facility-previous-key { background: #9ab3c4; }
+.subtle { color: var(--muted); font-size: 12px; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; align-items: end; }
+label { min-width: 0; color: #536a7d; font-size: 13px; font-weight: 650; display: grid; gap: 4px; }
+input, select { width: 100%; min-height: 34px; border: 1px solid #d6e0e7; border-radius: 7px; padding: 6px 9px; color: var(--ink); background: #fff; font: inherit; font-size: 14px; }
+input:focus, select:focus { outline: 2px solid #8ccdc7; outline-offset: 1px; border-color: var(--teal); }
+.button { min-height: 34px; border-radius: 7px; padding: 0 14px; border: 1px solid transparent; font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; transition: background-color .15s ease, border-color .15s ease; }
+.button:disabled { opacity: .55; cursor: wait; }
+.button-primary { color: #fff; background: var(--teal); }
+.button-primary:hover { background: #087872; }
+.button-secondary { color: var(--ink); background: #fff; border-color: #d6e0e7; }
+.button-secondary:hover { border-color: #9aadb9; background: #f8fafb; }
+.button-danger { color: #a63232; background: #fff; border-color: #e6bbbb; }
+.button-danger:hover { border-color: #c97b7b; background: #fff8f8; }
+.apply-button { width: 100%; }
+.chart-heading-actions { display: flex; flex-wrap: wrap; align-items: end; justify-content: flex-end; gap: 8px; }
+.comparison-caption { min-height: 14px; margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.chart-metric { min-width: 180px; }
+.monthly-chart { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; min-height: 210px; overflow-x: hidden; padding: 10px 4px 0; border-bottom: 1px solid var(--line); }
+.month-chart-group { flex: 1 1 90px; min-width: 0; display: grid; grid-template-rows: 58px 120px 25px; gap: 5px; padding: 0 4px 8px; border: 0; border-radius: 6px 6px 0 0; background: transparent; color: var(--muted); font: inherit; cursor: pointer; }
+.month-chart-group:hover, .month-chart-group:focus-visible { background: #f2f8fa; outline: 2px solid #8ccdc7; outline-offset: -2px; }
+.month-chart-total { background: #f7f9fb; border-left: 1px solid var(--line); cursor: default; }
+.month-chart-total:hover, .month-chart-total:focus-visible { background: #f7f9fb; outline: 0; }
+.month-chart-total .month-chart-label { color: var(--ink); font-weight: 800; }
+.month-chart-total .month-chart-bars { align-items: center; border-bottom: 0; }
+.month-chart-total .month-chart-bars::after { content: "Selected range"; color: var(--muted); font-size: 11px; }
+.month-chart-values { display: grid; align-content: start; gap: 3px; min-height: 0; text-align: center; font-size: 11px; font-variant-numeric: tabular-nums; }
+.month-chart-values .month-chart-change { justify-self: center; margin: 0 auto; font-size: 9px; }
+.month-chart-value { width: fit-content; max-width: 100%; margin: 0 auto; padding: 2px 5px; border-radius: 10px; white-space: nowrap; font-size: 12px; font-weight: 800; }
+.month-chart-value.current { color: #087b73; background: #e2f4f1; }
+.month-chart-value.previous { color: #4d5fc2; background: #eceeff; }
+.month-chart-bars { height: 120px; display: flex; align-items: end; justify-content: center; gap: 8px; border-bottom: 1px solid #cbd7df; }
+.month-chart-bar { width: min(28px, 36%); min-height: 0; border-radius: 6px 6px 0 0; transition: height .2s ease, filter .15s ease; }
+.month-chart-bar.current { background: linear-gradient(180deg, #22a99e, #087f78); }
+.month-chart-bar.previous { background: linear-gradient(180deg, #8998f5, #5968cf); }
+.month-chart-group:hover .month-chart-bar, .month-chart-group:focus-visible .month-chart-bar { filter: brightness(.92); }
+.month-chart-label { min-height: 25px; font-size: 11px; text-align: center; line-height: 1.25; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; color: var(--muted); font-size: 11px; }
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend b { color: var(--ink); font-weight: 650; }
+.chart-legend i { flex: 0 0 10px; width: 10px; height: 10px; border-radius: 3px; }
+.legend-current { background: linear-gradient(135deg, #22a99e, #087f78); }
+.legend-previous { background: linear-gradient(135deg, #8998f5, #5968cf); }
+.hospital-monthly-panel { padding: 2px 18px 16px; }
+.hospital-monthly-panel .section-heading { margin-bottom: 5px; }
+.hospital-monthly-panel .section-heading h2 { font-size: 16px; }
+.hospital-monthly-note { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.hospital-monthly-chart { min-width: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(148px, 1fr); align-items: stretch; gap: 8px; min-height: 230px; overflow-x: auto; padding: 8px 4px 0; border-bottom: 1px solid var(--line); }
+.hospital-month-group { min-width: 0; display: grid; grid-template-rows: 1fr auto; gap: 8px; padding: 0 2px 8px; border-radius: 6px 6px 0 0; }
+.hospital-month-bars { height: 185px; display: flex; align-items: end; justify-content: center; gap: 3px; border-bottom: 1px solid #cbd7df; }
+.hospital-month-series { flex: 1 1 0; min-width: 0; height: 100%; }
+.hospital-month-value { position: absolute; left: 50%; bottom: calc(var(--bar-height, 0%) + 5px); z-index: 1; display: block; width: max-content; max-width: none; transform: translateX(-50%); font-size: clamp(12px, 0.72vw, 14px); font-weight: 850; font-variant-numeric: tabular-nums; line-height: 1.25; text-align: center; white-space: nowrap; }
+.hospital-month-series:nth-child(1) .hospital-month-value { color: #075b55; }
+.hospital-month-series:nth-child(2) .hospital-month-value { color: #3545a0; }
+.hospital-month-series:nth-child(3) .hospital-month-value { color: #85400c; }
+.hospital-month-track { position: relative; display: block; height: 100%; }
+.hospital-month-bar { position: absolute; bottom: 0; left: 50%; width: min(26px, 80%); min-height: 0; transform: translateX(-50%); border-radius: 5px 5px 0 0; }
+.hospital-month-bar.hospital-0 { background: linear-gradient(180deg, #22a99e, #087f78); }
+.hospital-month-bar.hospital-1 { background: linear-gradient(180deg, #8998f5, #5968cf); }
+.hospital-month-bar.hospital-2 { background: linear-gradient(180deg, #f0ad57, #d67b21); }
+.hospital-month-label { min-height: 20px; color: var(--ink); font-size: 12px; font-weight: 650; line-height: 1.25; text-align: center; }
+.hospital-monthly-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; color: var(--muted); font-size: 11px; }
+.hospital-monthly-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.hospital-monthly-legend i { flex: 0 0 10px; width: 10px; height: 10px; border-radius: 3px; }
+.hospital-monthly-legend .hospital-key-0 { background: #138a83; }
+.hospital-monthly-legend .hospital-key-1 { background: #5968cf; }
+.hospital-monthly-legend .hospital-key-2 { background: #d67b21; }
+.supplier-chart-filter { display: grid; gap: 4px; min-width: 155px; color: var(--muted); font-size: 12px; font-weight: 650; }
+.supplier-chart-filter select { width: 100%; min-height: 32px; padding: 5px 8px; font-size: 13px; }
+.supplier-chart-caption { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
+.supplier-chart { display: grid; gap: 8px; padding: 2px 2px 4px; }
+.supplier-group-label { grid-column: 1 / -1; margin: 5px 0 0; padding-bottom: 4px; border-bottom: 1px solid var(--line); color: var(--teal); font-size: 12px; }
+.supplier-group-label.supplier-group-low { margin-top: 12px; color: var(--muted); }
+.supplier-bar-row { min-width: 0; display: grid; grid-template-columns: minmax(100px, 1.2fr) minmax(60px, 3fr) minmax(100px, auto); align-items: center; gap: 10px; }
+.supplier-bar-name { min-width: 0; overflow: hidden; color: var(--ink); font-size: 13px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.supplier-bar-track { height: 10px; overflow: hidden; border-radius: 8px; background: #edf2f5; }
+.supplier-bar { display: block; height: 100%; min-width: 0; border-radius: inherit; background: linear-gradient(90deg, #2ba99e, #087f78); }
+.supplier-bar-low { background: linear-gradient(90deg, #8295a4, #64798a); }
+.supplier-bar-amount { color: var(--ink); font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+.import-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: end; }
+.import-file-actions { display: flex; align-items: end; gap: 8px; min-width: 0; }
+.import-file-actions .file-picker { flex: 1 1 auto; min-width: 0; }
+.import-file-actions .button { flex: 0 0 auto; }
+.file-picker { min-height: 34px; }
+.file-picker input { min-height: 34px; padding: 5px; font-size: 12px; }
+.status-message { min-height: 14px; margin-top: 7px; font-size: 13px; color: var(--muted); }
+.status-message.error { color: #a63232; }
+.status-message.success { color: #087b57; }
+.preview-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 0 8px; }
+.preview-heading h3, .file-preview-heading h3 { margin: 0 0 3px; font-size: 14px; overflow-wrap: anywhere; }
+.preview-heading p { margin: 0; }
+.mapping-help { color: var(--muted); font-size: 13px; margin: 0 0 6px; }
+.mapping-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 8px; margin: 8px 0 4px; }
+.purchase-mapping-field.hidden { display: none; }
+.batch-preview-list { display: grid; gap: 10px; }
+.batch-file-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 7px; }
+.batch-file-row strong { overflow-wrap: anywhere; }
+.batch-file-row span { min-width: 0; color: var(--muted); overflow-wrap: anywhere; }
+.download-button { display: inline-flex; align-items: center; text-decoration: none; min-height: 28px; }
+.upload-actions { display: flex; align-items: center; gap: 6px; }
+.remove-upload-button { min-height: 28px; padding: 0 9px; }
+.metric-grid { scroll-margin-top: 18px; }
+.metric-card { min-width: 0; padding: 12px 14px; min-height: 98px; border-top: 3px solid var(--teal); }
+.metric-card:nth-child(2) { border-top-color: var(--blue); }
+.metric-card:nth-child(3) { border-top-color: var(--orange); }
+.metric-card:nth-child(4) { border-top-color: #7793a7; }
+.metric-label { font-size: 14px; font-weight: 700; color: var(--muted); }
+.metric-value { margin: 7px 0 5px; font-weight: 800; font-size: clamp(18px, 1.65vw, 27px); letter-spacing: -.03em; overflow-wrap: anywhere; }
+.metric-value.pending-outstanding { color: var(--red); }
+.metric-value.pending-settled { color: #087b57; }
+.metric-compare { font-size: 13px; color: var(--muted); line-height: 1.4; }
+.delta { font-weight: 850; }
+.delta.up { color: #087b57; }
+.delta.down { color: var(--red); }
+.delta.flat { color: var(--muted); }
+.loading-card { grid-column: 1 / -1; color: var(--muted); min-height: 72px; }
+.table-scroll { width: 100%; min-width: 0; overflow-x: hidden; }
+.facility-panel .table-scroll { overflow: visible; }
+.facility-panel table { width: 100%; min-width: 0; }
+.facility-panel th { padding: 9px 10px; font-size: 13px; }
+.facility-panel td { padding: 9px 10px; font-size: 14px; }
+.facility-panel .numeric { white-space: nowrap; }
+table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 12px; white-space: normal; }
+.daily-panel .table-scroll { width: 100%; }
+.monthly-totals-table { width: 100%; }
+.monthly-totals-table th:first-child, .monthly-totals-table td:first-child { width: 20%; }
+.monthly-totals-table th:not(:first-child), .monthly-totals-table td:not(:first-child) { width: 20%; }
+.monthly-totals-table th:not(:first-child), .monthly-totals-table .numeric { text-align: right; }
+.facility-panel th:first-child, .facility-panel td:first-child { width: 15%; }
+.facility-panel th:nth-child(2), .facility-panel td:nth-child(2) { width: 12%; }
+th { text-align: left; color: #63798b; background: #f7f9fb; font-size: 10px; text-transform: uppercase; letter-spacing: .045em; font-weight: 800; padding: 6px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+td { padding: 6px; border-bottom: 1px solid #edf1f4; font-size: 12px; overflow-wrap: anywhere; }
+tbody tr:hover { background: #f8fbfc; }
+.facility-grand-total { border-top: 2px solid var(--line); font-weight: 800; }
+.facility-grand-total td { font-weight: 800; }
+.monthly-grand-total { border-top: 2px solid var(--line); background: #f7f9fb; }
+.monthly-grand-total td { font-weight: 800; }
+.hospital-comparison-panel { padding: 0; overflow: hidden; }
+.hospital-comparison-summary { min-height: 62px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); }
+.hospital-comparison-heading { min-width: 0; display: grid; gap: 4px; }
+.hospital-comparison-summary .eyebrow { margin: 0; }
+.hospital-comparison-title { margin: 0; color: var(--ink); font-size: 18px; font-weight: 750; }
+.hospital-facility-summary-section { padding: 12px 18px 18px; }
+.hospital-summary-context { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
+.hospital-comparison-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 9px; }
+.hospital-comparison-table { width: 100%; min-width: 1240px; table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.hospital-comparison-table th, .hospital-comparison-table td { padding: 10px 12px; text-align: left; vertical-align: middle; }
+.hospital-comparison-table thead th { border-bottom: 1px solid var(--line); background: #f7f9fb; }
+.hospital-comparison-table .hospital-comparison-groups th { color: #64798a; background: #eef3f6; font-size: 10px; letter-spacing: .07em; }
+.hospital-comparison-table .hospital-comparison-groups th:not(:first-child) { text-align: center; }
+.hospital-comparison-table thead tr:nth-child(2) th { color: var(--ink); font-size: 11px; text-transform: none; letter-spacing: 0; }
+.hospital-comparison-table thead th:first-child, .hospital-comparison-table tbody th { width: 210px; }
+.hospital-comparison-table tbody th, .hospital-comparison-table tbody td { border-bottom: 1px solid #edf1f4; }
+.hospital-comparison-table tbody th, .hospital-comparison-table tbody td { vertical-align: top; }
+.hospital-comparison-table tbody th { text-transform: none; }
+.hospital-comparison-table tbody tr:last-child th, .hospital-comparison-table tbody tr:last-child td { border-bottom: 0; }
+.hospital-comparison-table tbody tr:hover { background: #f8fbfc; }
+.hospital-comparison-table tbody th { position: sticky; left: 0; z-index: 1; background: #fff; }
+.hospital-comparison-table tbody tr:hover th { background: #f8fbfc; }
+.hospital-facility-title { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--ink); font-size: 13px; font-weight: 750; }
+.hospital-facility-title::before { flex: 0 0 9px; width: 9px; height: 9px; border-radius: 50%; background: #138a83; content: ""; }
+.hospital-facility-title.hospital-key-1::before { background: #5968cf; }
+.hospital-facility-title.hospital-key-2::before { background: #d67b21; }
+.hospital-comparison-table tbody td:not(.hospital-summary-empty) { text-align: right; }
+.hospital-comparison-value { display: block; color: var(--ink); font-size: clamp(14px, 0.9vw, 16px); font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hospital-comparison-value.pending-outstanding { color: var(--ink); }
+.hospital-pending-cell { background: #fff9f8; }
+.hospital-comparison-table .hospital-comparison-change, .hospital-comparison-table .hospital-comparison-change-neutral { display: block; width: auto; max-width: 100%; min-height: 0; margin: 5px 0 0 auto; padding: 0; border-radius: 0; background: transparent; box-sizing: border-box; font-size: 13px; font-weight: 800; line-height: 1.4; text-align: right; white-space: nowrap; }
+.hospital-comparison-table .hospital-comparison-change.up { color: #087b57; background: transparent; }
+.hospital-comparison-table .hospital-comparison-change.down { color: #a63232; background: transparent; }
+.hospital-comparison-change-neutral { color: #8494a1; font-size: 11px; }
+.hospital-summary-empty { padding: 18px !important; color: var(--muted); font-size: 13px; text-align: center !important; }
+body[data-module="hospitals"] .filters-panel { padding: 8px 14px; box-shadow: none; }
+body[data-module="hospitals"] .filters-panel > .section-heading { display: none; }
+body[data-module="hospitals"] .filters { grid-template-columns: repeat(3, minmax(150px, 1fr)) 112px; gap: 8px 12px; }
+body[data-module="hospitals"] .filters label { gap: 3px; color: #74889a; font-size: 11px; }
+body[data-module="hospitals"] .filters input,
+body[data-module="hospitals"] .filters select { min-height: 30px; padding: 4px 8px; font-size: 13px; }
+body[data-module="hospitals"] .filters .apply-button { min-height: 30px; align-self: end; }
+body[data-module="hospitals"] .comparison-caption { min-height: 0; margin: 5px 0 0; font-size: 11px; }
+.hospital-suppliers-panel { padding: 8px 18px 18px; border-top: 1px solid var(--line); }
+.hospital-supplier-charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hospital-supplier-card { min-width: 0; padding: 11px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfd; }
+.hospital-supplier-card-title { display: flex; align-items: center; gap: 7px; margin: 0 0 9px; color: var(--ink); font-size: 14px; font-weight: 750; }
+.hospital-supplier-card-title::before { flex: 0 0 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); content: ""; }
+.hospital-supplier-card-title.hospital-key-1::before { background: #5968cf; }
+.hospital-supplier-card-title.hospital-key-2::before { background: #d67b21; }
+.supplier-chart-compact { max-height: 320px; }
+tbody tr:last-child td { border-bottom: 0; }
+.facility-filter-button { max-width: 100%; padding: 1px 3px; border: 0; border-radius: 4px; background: transparent; color: var(--ink); font: inherit; text-align: left; overflow-wrap: anywhere; white-space: normal; cursor: pointer; }
+.facility-filter-button:hover { color: var(--teal); text-decoration: underline; }
+.facility-filter-button:focus-visible { outline: 2px solid #8ccdc7; outline-offset: 1px; }
+.facility-current { background: #eff8f6; }
+.facility-previous { background: #f1f5f8; color: #526c80; }
+.facility-amount { color: #087b73; font-size: 14px; font-weight: 800; white-space: nowrap; }
+.facility-change { display: block; width: fit-content; margin: 4px 0 0 auto; padding: 3px 7px; border-radius: 10px; font-size: 13px; font-weight: 750; line-height: 1.25; white-space: nowrap; }
+.facility-change[hidden] { display: none; }
+.facility-change.up { color: #087b57; background: #ddf3e9; }
+.facility-change.down { color: #a63232; background: #fde8e6; }
+.facility-change.flat { color: #64788a; background: #e8eef2; }
+.numeric { text-align: right; font-variant-numeric: tabular-nums; }
+.empty-cell { padding: 10px; color: var(--muted); text-align: center; }
+footer { text-align: center; color: #8091a0; font-size: 12px; padding: 3px; }
+.hidden { display: none !important; }
+
+@media print {
+  body { background: #fff; }
+  .page { width: 100%; margin: 0; gap: 8px; }
+  .topbar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .export-actions, .filters, .import-panel, .archive-panel, footer,
+  .chart-metric, .module-nav { display: none !important; }
+  .panel, .metric-card { box-shadow: none; break-inside: avoid; }
+  .table-scroll, .monthly-chart { overflow: visible; }
+  .month-chart-group { flex: 1 1 6%; min-width: 0; }
+}
+
+@media (max-width: 900px) {
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .chart-metric { min-width: 140px; }
+  .supplier-chart-filter { min-width: 135px; }
+  .supplier-bar-row { grid-template-columns: minmax(85px, 1fr) minmax(50px, 2fr) minmax(85px, auto); gap: 7px; }
+  .import-controls { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .panel { padding: 12px; }
+  .facility-panel .table-scroll { overflow: visible; }
+  .facility-panel table, .facility-panel tbody { display: block; width: 100%; }
+  .facility-panel thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .facility-panel tbody {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 10px;
+  }
+  .facility-panel tbody tr {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .facility-panel tbody td {
+    min-width: 0;
+    width: auto !important;
+    padding: 9px;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .facility-panel tbody td::before {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .facility-panel tbody td:nth-child(1)::before { content: "Hospital"; }
+  .facility-panel tbody td:nth-child(2)::before { content: "Pharmacy"; }
+  .facility-panel tbody td:nth-child(3)::before { content: "Sales · current period"; }
+  .facility-panel tbody td:nth-child(4)::before { content: "Sales · comparison period"; }
+  .facility-panel tbody td:nth-child(5)::before { content: "Collection · current period"; }
+  .facility-panel tbody td:nth-child(6)::before { content: "Collection · comparison period"; }
+  .facility-panel tbody td:nth-child(7)::before { content: "Purchase · current period"; }
+  .facility-panel tbody td:nth-child(8)::before { content: "Purchase · comparison period"; }
+  .facility-panel tbody td:nth-child(9)::before { content: "Pending · current period"; }
+  .facility-panel tbody td:nth-child(10)::before { content: "Pending · comparison period"; }
+  .facility-panel tbody .facility-grand-total td:first-child { grid-column: 1 / -1; }
+  .facility-panel tbody .empty-cell { grid-column: 1 / -1; text-align: center; }
+  .facility-panel tbody .empty-cell::before { content: none; }
+  .facility-panel .facility-change { margin-left: 0; }
+}
+@media (max-width: 760px) { .hospital-supplier-charts { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) {
+  .topbar { flex-wrap: wrap; gap: 8px 12px; }
+  .module-nav { order: 3; flex: 1 0 100%; }
+  .topbar-actions { order: 2; }
+  body[data-module="hospitals"] .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-module="hospitals"] .filters .apply-button { width: 100%; }
+}
+@media (max-width: 580px) {
+  .topbar { padding: 8px 12px; flex-wrap: wrap; gap: 8px 12px; }
+  .topbar-brand { flex: 1 1 auto; }
+  .topbar-actions { order: 2; }
+  .module-nav { order: 3; flex: 1 0 100%; }
+  .local-badge { font-size: 12px; }
+  .topbar h1 { font-size: 17px; }
+  .module-tab { flex: 1 1 0; min-width: 0; padding: 0 6px; font-size: 11px; white-space: normal; line-height: 1.2; }
+  .topbar .module-tab { white-space: normal; }
+  .topbar-actions .button { padding: 0 9px; font-size: 12px; }
+  .page { width: calc(100% - 16px); margin-top: 8px; gap: 8px; }
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-module="hospitals"] .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .apply-button { width: 100%; }
+  .import-controls, .mapping-grid { grid-template-columns: 1fr 1fr; }
+  .metric-grid { gap: 6px; }
+  .metric-card { padding: 8px 7px; min-height: 88px; }
+  .metric-label { font-size: 12px; }
+  .metric-compare { font-size: 12px; }
+  .metric-value { font-size: clamp(16px, 3.5vw, 20px); }
+  .section-heading { align-items: center; }
+  .filters-panel .section-heading { align-items: flex-start; flex-direction: column; }
+  .export-actions { flex-wrap: wrap; }
+  .export-actions .button { padding: 0 9px; }
+  .import-controls { grid-template-columns: 1fr; }
+  .import-file-actions { align-items: stretch; flex-direction: column; }
+  .import-file-actions .button { width: 100%; }
+  .monthly-chart { min-height: 190px; }
+  .month-chart-bars { height: 110px; }
+  .hospital-monthly-chart { min-height: 205px; }
+  .hospital-month-bars { height: 160px; gap: 5px; }
+  .hospital-month-value { font-size: 12px; }
+  .chart-panel .section-heading { align-items: flex-start; }
+  .chart-heading-actions { align-items: flex-end; }
+  .chart-metric { min-width: 0; width: 130px; }
+  .supplier-chart-filter { width: 100%; }
+  .supplier-chart { max-height: none; }
+  .supplier-bar-row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; }
+  .supplier-bar-track { grid-column: 1 / -1; grid-row: 2; }
+  .supplier-bar-name, .supplier-bar-amount { font-size: 12px; }
+  .hospital-comparison-summary { padding: 9px 11px; }
+  .hospital-facility-summary-section { padding: 10px 11px 12px; }
+  .hospital-monthly-panel { padding: 2px 11px 12px; }
+  .hospital-monthly-panel .section-heading { align-items: flex-start; }
+  .hospital-monthly-panel .chart-metric { min-width: 120px; }
+  .hospital-suppliers-panel { padding: 8px 11px 12px; }
+  .hospital-suppliers-panel .section-heading { align-items: stretch; flex-direction: column; gap: 8px; }
+}
+
+@media (min-width: 901px) and (min-height: 700px) {
+  .page { gap: 10px; }
+  .facility-panel { padding-top: 12px; padding-bottom: 9px; }
+  .facility-panel .section-heading { margin-bottom: 6px; }
+}

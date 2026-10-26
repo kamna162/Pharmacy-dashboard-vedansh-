@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <title>Pharmacy Analytics Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body data-module="pharmacy">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-mark" aria-hidden="true">P</div>
+      <div>
+        <p class="eyebrow">MULTI-HOSPITAL PHARMACY</p>
+        <h1>Pharmacy Analytics</h1>
+      </div>
+    </div>
+    <nav class="module-nav" aria-label="Dashboard modules">
+      <button class="module-tab" type="button" data-module="pharmacy" aria-current="page">Pharmacy dashboard</button>
+      <button class="module-tab" type="button" data-module="hospitals">Hospital comparison</button>
+      <button class="module-tab" type="button" data-module="data">Data management</button>
+    </nav>
+    <div class="export-actions topbar-actions">
+      <button class="button button-secondary" id="refreshButton" type="button">Refresh</button>
+      <button class="button button-secondary" id="downloadHtmlButton" type="button">Download dashboard</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="panel filters-panel" data-module-view="date-filters" aria-labelledby="comparison-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow" id="filterEyebrow">SAME DATES · YEAR-ON-YEAR</p>
+          <h2 id="comparison-title">Pharmacy performance</h2>
+        </div>
+      </div>
+      <div class="filters">
+        <label class="facility-filter">Hospital
+          <select id="hospitalFilter">
+            <option value="all">All hospitals</option>
+            <option>Surya Hospital</option>
+            <option>NIMMS Hospital (Haldoni)</option>
+            <option>Vedansh Hospital (Dadri)</option>
+          </select>
+        </label>
+        <label class="facility-filter">Pharmacy
+          <select id="pharmacyFilter">
+            <option value="all">All pharmacies</option>
+            <option value="IPD">IPD Pharmacy</option>
+            <option value="OPD">OPD Pharmacy</option>
+            <option value="Pharmacy">Pharmacy</option>
+          </select>
+        </label>
+        <label>Date range
+          <select id="periodFilter">
+            <option value="year">Year to date</option>
+            <option value="custom" selected>Custom range</option>
+          </select>
+        </label>
+        <label id="startDateGroup" class="hidden">From
+          <input id="startDate" type="date">
+        </label>
+        <label id="endDateGroup" class="hidden">To
+          <input id="endDate" type="date">
+        </label>
+        <button class="button button-primary apply-button" id="applyFilters" type="button">Apply</button>
+      </div>
+      <p class="comparison-caption" id="comparisonCaption" aria-live="polite"></p>
+    </section>
+
+    <section class="metric-grid pharmacy-module-section" data-module-view="pharmacy" id="metricGrid" aria-live="polite">
+      <div class="metric-card loading-card">Loading pharmacy data…</div>
+    </section>
+
+    <section class="panel facility-panel pharmacy-module-section" data-module-view="pharmacy">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">HOSPITAL × PHARMACY</p>
+          <h2>Facility comparison</h2>
+        </div>
+        <div class="facility-legend" aria-label="Comparison value legend">
+          <span><i class="facility-current-key"></i>Current period</span>
+          <span><i class="facility-previous-key"></i>Same dates last year</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Hospital</th><th>Pharmacy</th><th>Sales · current period</th><th>Sales · comparison period</th><th>Collection · current period</th><th>Collection · comparison period</th><th>Purchase · current period</th><th>Purchase · comparison period</th><th>Pending · current period</th><th>Pending · comparison period</th></tr>
+          </thead>
+          <tbody id="facilityRows"><tr><td colspan="10" class="empty-cell">No data in this period.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel chart-panel pharmacy-module-section" data-module-view="pharmacy" aria-labelledby="chart-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">MONTHLY TREND · SAME MONTH LAST YEAR</p>
+          <h2 id="chart-title">Monthly comparison</h2>
+        </div>
+        <div class="chart-heading-actions">
+          <button class="button button-secondary" id="resetMonthFilter" type="button" hidden>Back to full range</button>
+          <label class="chart-metric">Report
+            <select id="chartMetric">
+              <option value="sales">Sales revenue</option>
+              <option value="collection">Collection revenue</option>
+              <option value="purchase">Purchase value</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div id="monthlyChart" class="monthly-chart" aria-live="polite">
+        <p class="empty-cell">Loading monthly comparison…</p>
+      </div>
+      <div class="chart-legend" aria-label="Chart legend">
+        <span><i class="legend-current"></i>Current period</span>
+        <span><i class="legend-previous"></i>Same dates last year</span>
+      </div>
+    </section>
+
+    <section class="panel supplier-panel pharmacy-module-section" data-module-view="pharmacy" aria-labelledby="supplier-chart-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PURCHASE ANALYSIS</p>
+          <h2 id="supplier-chart-title">Supplier purchase amounts</h2>
+        </div>
+        <label class="supplier-chart-filter">Suppliers
+          <select id="supplierChartMode">
+            <option value="ends">Top 5 &amp; lowest 5</option>
+            <option value="all">All suppliers</option>
+          </select>
+        </label>
+      </div>
+      <p class="supplier-chart-caption" id="supplierChartCaption"></p>
+      <div class="supplier-chart" id="supplierChart" aria-live="polite">
+        <p class="empty-cell">Loading supplier purchases…</p>
+      </div>
+    </section>
+
+    <section class="panel daily-panel pharmacy-module-section" data-module-view="pharmacy" aria-labelledby="daily-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">BILL DATE TOTALS</p>
+          <h2 id="daily-title">Monthly breakdown</h2>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="monthly-totals-table">
+          <thead>
+            <tr><th>Month · Year</th><th>Sales Revenue</th><th>Collection Revenue</th><th>Purchase Value</th><th>Pending amount</th></tr>
+          </thead>
+          <tbody id="dailyRows"><tr><td colspan="5" class="empty-cell">No data in this period.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel hospital-comparison-panel" id="hospitalComparisonPanel" data-module-view="hospitals" aria-labelledby="hospital-comparison-title">
+      <div class="hospital-comparison-summary">
+        <div class="hospital-comparison-heading">
+          <span class="eyebrow">HOSPITAL PERFORMANCE</span>
+          <h2 class="hospital-comparison-title" id="hospital-comparison-title">Hospital comparison</h2>
+        </div>
+      </div>
+      <div id="hospitalComparisonContent">
+        <div class="hospital-facility-summary-section">
+          <p class="hospital-summary-context">Amounts for the selected period · Change is versus the same dates last year</p>
+          <div class="hospital-comparison-table-wrap">
+            <table class="hospital-comparison-table" aria-label="Financial comparison by hospital">
+              <thead>
+                <tr class="hospital-comparison-groups">
+                  <th rowspan="2" scope="col">Hospital</th>
+                  <th colspan="2" scope="colgroup">Revenue</th>
+                  <th scope="colgroup">Purchases</th>
+                  <th colspan="3" scope="colgroup">Outstanding</th>
+                </tr>
+                <tr>
+                  <th scope="col">Sales revenue</th>
+                  <th scope="col">Collection</th>
+                  <th scope="col">Purchase value</th>
+                  <th scope="col">Pending total</th>
+                  <th scope="col">Cash due</th>
+                  <th scope="col">Credit due</th>
+                </tr>
+              </thead>
+              <tbody id="hospitalFacilitySummaries" aria-live="polite">
+                <tr><td colspan="7" class="hospital-summary-empty">Loading hospital comparison…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="hospital-monthly-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">MONTH-BY-MONTH</p>
+              <h2 id="hospital-monthly-title">Monthly performance</h2>
+            </div>
+            <label class="chart-metric">Compare by
+              <select id="hospitalMonthlyMetric">
+                <option value="sales">Sales revenue</option>
+                <option value="collection">Collection revenue</option>
+                <option value="purchase">Purchase value</option>
+              </select>
+            </label>
+          </div>
+          <div id="hospitalMonthlyChart" class="hospital-monthly-chart" aria-live="polite">
+            <p class="empty-cell">Loading monthly hospital comparison…</p>
+          </div>
+          <div class="hospital-monthly-legend" id="hospitalMonthlyLegend" aria-label="Hospital legend"></div>
+          <p class="hospital-monthly-note">“—” means report data is not available for that month.</p>
+        </div>
+        <div class="hospital-suppliers-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">PURCHASE ANALYSIS</p>
+              <h2>Supplier purchases by hospital</h2>
+            </div>
+            <label class="supplier-chart-filter">Suppliers
+              <select id="hospitalSupplierChartMode">
+                <option value="ends">Top 5 &amp; lowest 5</option>
+                <option value="all">All suppliers</option>
+              </select>
+            </label>
+          </div>
+          <div class="hospital-supplier-charts" id="hospitalSupplierCharts" aria-live="polite">
+            <p class="empty-cell">Loading hospital supplier purchases…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel import-panel" data-module-view="data" aria-labelledby="import-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="import-title">Store hospital reports</h2>
+        </div>
+      </div>
+      <div class="import-controls">
+        <label>Hospital
+          <select id="uploadHospital">
+            <option>Surya Hospital</option>
+            <option>NIMMS Hospital (Haldoni)</option>
+            <option>Vedansh Hospital (Dadri)</option>
+          </select>
+        </label>
+        <label>Pharmacy
+          <select id="batchPharmacy">
+            <option value="IPD">IPD Pharmacy</option>
+            <option value="OPD">OPD Pharmacy</option>
+          </select>
+        </label>
+        <div class="import-file-actions">
+          <label class="file-picker">Report files · max 3 files, 50 MB total
+            <input id="reportFile" type="file" accept=".xlsx,.csv" multiple>
+          </label>
+          <button class="button button-secondary" id="previewButton" type="button">Check selected files</button>
+        </div>
+      </div>
+      <div id="importStatus" class="status-message" role="status" aria-live="polite"></div>
+      <div id="previewArea" class="hidden">
+        <div class="preview-heading">
+          <div><h3>Files ready</h3><p id="previewCount" class="subtle"></p></div>
+          <button class="button button-primary" id="importButton" type="button">Store and import all</button>
+        </div>
+        <p class="mapping-help">Upload one report or a complete set. The report type and columns are detected automatically. Purchase reports should include supplier/vendor name and Final Amt columns for supplier analysis.</p>
+        <div id="batchPreviewList" class="batch-preview-list"></div>
+      </div>
+    </section>
+    <section class="panel archive-panel" data-module-view="data" aria-labelledby="archive-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="archive-title">Stored reports</h2>
+        </div>
+        <span class="subtle" id="archiveHospital"></span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>File</th><th>Pharmacy</th><th>Report type</th><th>Rows</th><th></th></tr></thead>
+          <tbody id="uploadRows"><tr><td colspan="5" class="empty-cell">Loading stored reports…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

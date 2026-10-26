@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+pharmacy.db
+pharmacy.db-shm
+pharmacy.db-wal
+.venv/
