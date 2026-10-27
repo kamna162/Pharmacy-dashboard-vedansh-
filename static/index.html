@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102f49">
+  <title>Vedansh Medicare · Executive Dashboard</title>
+  <link rel="stylesheet" href="/assets/module-selector.css">
+  <script src="/assets/module-selector.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Vedansh Medicare module selection">
+      <img src="/assets/vedansh-logo.png" alt="Vedansh Medicare">
+      <span>
+        <span class="brand-kicker">VEDANSH MEDICARE</span>
+        <strong>Executive Dashboard</strong>
+      </span>
+    </a>
+    <div class="auth-area" aria-live="polite">
+      <span id="signedInAs" class="signed-in-as" hidden></span>
+      <button id="authToggle" class="auth-toggle" type="button">Log in</button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="welcome">
+      <div class="welcome-copy">
+        <p class="eyebrow">EXECUTIVE WORKSPACE</p>
+        <h1>Your operations,<br><span>one clear view.</span></h1>
+        <p>Select a module to review performance and key business details.</p>
+      </div>
+    </section>
+
+    <section class="module-grid" aria-label="Dashboard modules">
+      <a class="module-card hospital-card" href="/dashboard">
+        <span class="module-card-top">
+          <span class="module-icon hospital-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h8A1.5 1.5 0 0 1 15 5.5V21M15 10h3.5a1.5 1.5 0 0 1 1.5 1.5V21M2.5 21h19M8 8h1m3 0h1m-5 4h1m3 0h1m-5 4h1m3 0h1m5-3v4m-2-2h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="module-type">01 <i></i> HOSPITAL MODULE</span>
+        </span>
+        <h2>Hospital operations</h2>
+        <p>Review hospital performance, revenue, admissions, discharges, services, and forecasts.</p>
+        <span class="module-features"><span>Revenue &amp; KPIs</span><span>Patient activity</span><span>Forecasts</span></span>
+        <span class="module-link">Explore hospital dashboard <span aria-hidden="true">↗</span></span>
+      </a>
+
+      <a class="module-card pharmacy-card" href="/pharmacy/">
+        <span class="module-card-top">
+          <span class="module-icon pharmacy-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6m-5 0v4l-4.1 4.55A4 4 0 0 0 5 14.23V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4.77a4 4 0 0 0-.9-2.68L14 7V3m-6.2 9h8.4M9 16h2m2 0h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="module-type">02 <i></i> PHARMACY MODULE</span>
+        </span>
+        <h2>Pharmacy performance</h2>
+        <p>Review pharmacy sales, collections, purchases, supplier trends, and hospital comparisons.</p>
+        <span class="module-features"><span>Sales &amp; collections</span><span>Purchases</span><span>Suppliers</span></span>
+        <span class="module-link">Explore pharmacy dashboard <span aria-hidden="true">↗</span></span>
+      </a>
+    </section>
+
+    <footer class="page-footer">
+      <span>VEDANSH MEDICARE PVT. LTD.</span>
+      <span><i></i> Select a module to get started</span>
+    </footer>
+  </main>
+
+  <dialog id="authDialog" class="auth-dialog" aria-labelledby="authTitle">
+    <form id="authForm" class="auth-form">
+      <p class="eyebrow">VEDANSH MEDICARE</p>
+      <h2 id="authTitle">Sign in to continue</h2>
+      <p id="authDescription" class="auth-description">Use your dashboard account to continue.</p>
+      <label for="authUsername">Username</label>
+      <input id="authUsername" name="username" type="text" maxlength="64" autocomplete="username" required>
+      <label for="authPassword">Password</label>
+      <input id="authPassword" name="password" type="password" autocomplete="current-password" required>
+      <p id="authError" class="auth-error" role="alert" hidden></p>
+      <button id="authSubmit" class="auth-submit" type="submit">Log in</button>
+      <p id="passwordHint" class="password-hint" hidden>Choose a password with at least 8 characters.</p>
+    </form>
+  </dialog>
+</body>
+</html>

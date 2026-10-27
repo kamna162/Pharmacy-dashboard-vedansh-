@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#102a43">
   <title>Pharmacy Analytics Dashboard</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/pharmacy/styles.css?v=20261026-professional-layout">
 </head>
 <body data-module="pharmacy">
   <header class="topbar">
@@ -20,6 +20,7 @@
       <button class="module-tab" type="button" data-module="pharmacy" aria-current="page">Pharmacy dashboard</button>
       <button class="module-tab" type="button" data-module="hospitals">Hospital comparison</button>
       <button class="module-tab" type="button" data-module="data">Data management</button>
+      <a class="module-home-tab" href="/">All modules</a>
     </nav>
     <div class="export-actions topbar-actions">
       <button class="button button-secondary" id="refreshButton" type="button">Refresh</button>
@@ -28,6 +29,14 @@
   </header>
 
   <main class="page">
+    <section class="module-intro" aria-labelledby="pharmacy-module-title">
+      <div>
+        <p class="eyebrow">PHARMACY PERFORMANCE</p>
+        <h2 id="pharmacy-module-title">Pharmacy overview</h2>
+        <p>Explore sales, collections, purchasing activity, and supplier trends across facilities.</p>
+      </div>
+      <span class="module-intro-badge"><i></i> EXECUTIVE VIEW</span>
+    </section>
     <section class="panel filters-panel" data-module-view="date-filters" aria-labelledby="comparison-title">
       <div class="section-heading">
         <div>
@@ -282,6 +291,6 @@
       </div>
     </section>
   </main>
-  <script src="/app.js"></script>
+  <script src="/pharmacy/app.js"></script>
 </body>
 </html>

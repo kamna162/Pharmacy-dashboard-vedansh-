@@ -1,0 +1,116 @@
+<section id="comparison-view" class="is-hidden">
+      <div class="panel comparison-controls" aria-label="Comparison controls">
+        <div class="comparison-controls-heading">
+          <div>
+            <h2>Compare &amp; forecast hospital performance</h2>
+          </div>
+          <div class="comparison-heading-tools">
+            <span class="comparison-header-badge">COMPARE + FORECAST</span>
+          </div>
+        </div>
+        <div class="comparison-filter-grid">
+          <label class="field"><span>Hospital</span><select id="comparison-hospital"></select></label>
+          <label class="field"><span>Compare by</span>
+            <select id="comparison-mode">
+              <option value="Year">Year</option>
+              <option value="Month">Month</option>
+              <option value="Recent">Last months</option>
+              <option value="Period">Period</option>
+              <option value="From-To">From-To</option>
+            </select>
+          </label>
+          <div id="comparison-dynamic-fields" class="comparison-dynamic-fields"></div>
+          <div class="comparison-filter-actions">
+            <button class="button button-primary comparison-apply" id="apply-comparison" type="button">Compare</button>
+            <button class="button button-secondary comparison-reset" id="reset-comparison" type="button">Reset</button>
+          </div>
+        </div>
+        <p class="comparison-mode-hint" id="comparison-mode-hint"></p>
+      </div>
+      <div id="comparison-content" data-view="charts">
+        <div id="comparison-charts-view" class="comparison-charts-only">
+          <section id="comparison-forecast-section" class="comparison-forecast is-hidden">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">TREND &amp; FORECAST</p>
+                <h2 id="comparison-forecast-title">Forecast</h2>
+                <p id="comparison-forecast-subtitle"></p>
+              </div>
+              <span class="section-note" id="comparison-forecast-confidence"></span>
+            </div>
+            <div class="fc-legend" id="comparison-forecast-legend"></div>
+            <ul id="comparison-forecast-notes" class="comparison-summary"></ul>
+            <div id="comparison-forecast-grid" class="chart-grid"></div>
+          </section>
+          <div class="section-heading comparison-breakdown-heading">
+            <div>
+              <p class="eyebrow">PERIOD COMPARISON</p>
+              <h2>Department, doctor and service comparison</h2>
+            </div>
+          </div>
+          <div class="comparison-chart-legend" id="comparison-chart-legend"></div>
+          <p class="eyebrow comparison-group-title">IPD ADMISSION</p>
+          <div class="comparison-chart-grid-2">
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD admission by department</h3></div>
+              <div id="comparison-admission-departments-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD admission by department bar chart"></div>
+              <div id="comparison-admission-departments-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD admission by doctor</h3></div>
+              <div id="comparison-admission-doctors-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD admission by doctor bar chart"></div>
+              <div id="comparison-admission-doctors-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+          </div>
+          <p class="eyebrow comparison-group-title">IPD DISCHARGE</p>
+          <div class="comparison-chart-grid-2">
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD discharge by department</h3></div>
+              <div id="comparison-discharge-departments-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD discharge by department bar chart"></div>
+              <div id="comparison-discharge-departments-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD discharge by doctor</h3></div>
+              <div id="comparison-discharge-doctors-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD discharge by doctor bar chart"></div>
+              <div id="comparison-discharge-doctors-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+          </div>
+          <p class="eyebrow comparison-group-title">OPD CONSULTATION</p>
+          <div class="comparison-chart-grid-2">
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>OPD consultation by department</h3></div>
+              <div id="comparison-opd-departments-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="OPD consultation by department bar chart"></div>
+              <div id="comparison-opd-departments-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>OPD consultation by doctor</h3></div>
+              <div id="comparison-opd-doctors-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="OPD consultation by doctor bar chart"></div>
+              <div id="comparison-opd-doctors-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+          </div>
+          <p class="eyebrow comparison-group-title">OPD SERVICES</p>
+          <div class="comparison-chart-grid-2">
+            <article class="panel chart-card comparison-mini-card comparison-mini-card-wide">
+              <div class="chart-heading"><h3>OPD services</h3></div>
+              <div id="comparison-services-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="OPD services bar chart"></div>
+              <div id="comparison-services-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+          </div>
+          <p class="eyebrow comparison-group-title">IPD REVENUE</p>
+          <div class="comparison-chart-grid-2">
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD revenue by department</h3></div>
+              <div id="comparison-ipd-departments-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD revenue by department bar chart"></div>
+              <div id="comparison-ipd-departments-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+            <article class="panel chart-card comparison-mini-card">
+              <div class="chart-heading"><h3>IPD revenue by doctor</h3></div>
+              <div id="comparison-ipd-doctors-chart" class="comparison-column-chart comparison-compact-chart" role="img" aria-label="IPD revenue by doctor bar chart"></div>
+              <div id="comparison-ipd-doctors-chart-total" class="chart-total comparison-chart-total" aria-live="polite"></div>
+            </article>
+          </div>
+          <p class="eyebrow comparison-donut-eyebrow">TARGET ACHIEVEMENT</p>
+          <div id="comparison-target-donuts" class="comparison-donut-grid"></div>
+        </div>
+      </div>
+    </section>

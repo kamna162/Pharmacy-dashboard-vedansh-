@@ -1,6 +1,36 @@
+# Python environments and generated files
+.venv/
+venv/
+env/
 __pycache__/
 *.py[cod]
-pharmacy.db
-pharmacy.db-shm
-pharmacy.db-wal
-.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local secrets and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local hospital data and uploaded source files
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.csv
+*.xls
+*.xlsx
+*.pdf
+*.docx
+
+# Generated offline dashboard exports and reports
+*_Interactive_Dashboard.html
+/exports/
+/uploads/
+/backup/
+/comparison/update/backup/

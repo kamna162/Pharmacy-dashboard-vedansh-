@@ -1,0 +1,12 @@
+ /* >>> comparison forecast css */
+.comparison-mode-hint { margin: 6px 2px 0; color: var(--muted); font-size: 11.5px; }
+.comparison-forecast { margin-bottom: 14px; }
+#comparison-forecast-grid .chart-wrap { height: 215px; }
+.fc-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 2px 8px; }
+.fc-legend-item { display: inline-flex; align-items: center; gap: 6px; color: #0f2a40; font-size: 11.5px; font-weight: 700; }
+.fc-legend-dot { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--c, #4b86c5); border-radius: 2px; }
+.fc-legend-dot.is-dashed { border-top-style: dashed; }
+.fc-legend-dot.is-hollow { width: 9px; height: 9px; border: 2px solid var(--c, #4b86c5); border-radius: 50%; background: #fff; }
+.comparison-forecast .chart-heading { min-height: 0; }
+.comparison-breakdown-heading { margin-top: 14px; }
+/* <<< comparison forecast css */

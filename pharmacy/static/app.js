@@ -154,7 +154,7 @@
       for (const file of files) {
         const form = new FormData();
         form.append("file", file);
-        const response = await fetch("/api/preview", {method: "POST", body: form});
+        const response = await fetch("/pharmacy-api/preview", {method: "POST", body: form});
         const metadata = await response.json();
         if (!response.ok) throw new Error(`${file.name}: ${metadata.error || "Preview failed."}`);
         const reportType = detectReportType(file.name);
@@ -202,7 +202,7 @@
       }))));
       showImportStatus(`Validating and storing ${filePreviews.length} files…`);
       byId("importButton").disabled = true;
-      const response = await fetch("/api/batch-import", {method: "POST", body: form});
+      const response = await fetch("/pharmacy-api/batch-import", {method: "POST", body: form});
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "The reports could not be stored.");
       byId("previewArea").classList.add("hidden");
@@ -1081,7 +1081,7 @@
     byId("metricGrid").innerHTML = '<div class="metric-card loading-card">Loading comparison…</div>';
     let kpisRendered = false;
     try {
-      const response = await fetch(`/api/summary?${params}`);
+      const response = await fetch(`/pharmacy-api/summary?${params}`);
       const data = await response.json();
       if (requestId !== dashboardLoadRequest) return false;
       if (!response.ok) throw new Error(data.error || "Dashboard load nahi ho saka.");
@@ -1147,7 +1147,7 @@
           hospital: byId("hospitalFilter").value,
           pharmacy: byId("pharmacyFilter").value,
         });
-        const comparisonResponse = await fetch(`/api/summary?${comparisonParams}`);
+        const comparisonResponse = await fetch(`/pharmacy-api/summary?${comparisonParams}`);
         const comparisonData = await comparisonResponse.json();
         if (requestId !== dashboardLoadRequest) return false;
         if (!comparisonResponse.ok) {
@@ -1220,7 +1220,7 @@
     button.disabled = true;
     try {
       const [dataResponse, styleResponse] = await Promise.all([
-        fetch("/api/export-data"),
+        fetch("/pharmacy-api/export-data"),
         fetch("/styles.css"),
       ]);
       let data;
@@ -1239,7 +1239,7 @@
             hospital,
             pharmacy,
           });
-          const summaryResponse = await fetch(`/api/summary?${params}`);
+          const summaryResponse = await fetch(`/pharmacy-api/summary?${params}`);
           const summary = await summaryResponse.json();
           if (!summaryResponse.ok) {
             throw new Error(summary.error || "Dashboard export data could not be prepared.");
@@ -1292,6 +1292,7 @@
       const header = document.querySelector(".topbar").cloneNode(true);
       const moduleNav = header.querySelector(".module-nav");
       if (!moduleNav) throw new Error("Dashboard module navigation could not be included in the export.");
+      moduleNav.querySelector(".module-home-tab")?.remove();
       moduleNav.querySelector('[data-module="data"]')?.remove();
       moduleNav.querySelectorAll(".module-tab").forEach(tab => {
         if (tab.dataset.module === "pharmacy") tab.setAttribute("aria-current", "page");
@@ -2383,7 +2384,7 @@
   $("chartMetric").addEventListener("change", render);
   $("hospitalMonthlyMetric").addEventListener("change", render);
   $("hospitalSupplierChartMode").addEventListener("change", render);
-  document.querySelectorAll(".module-tab").forEach(button => {
+  document.querySelectorAll(".module-tab[data-module]").forEach(button => {
     button.addEventListener("click", () => setDashboardModule(button.dataset.module));
   });
   $("facilityRows").addEventListener("click", event => {
@@ -2468,7 +2469,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     byId("archiveHospital").textContent = hospital;
     const rows = byId("uploadRows");
     try {
-      const response = await fetch(`/api/uploads?hospital=${encodeURIComponent(hospital)}`);
+      const response = await fetch(`/pharmacy-api/uploads?hospital=${encodeURIComponent(hospital)}`);
       const uploads = await response.json();
       if (!response.ok) throw new Error(uploads.error || "Stored reports could not be loaded.");
       if (!uploads.length) {
@@ -2494,7 +2495,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
         if (upload.source_available) {
           const download = document.createElement("a");
           download.className = "button button-secondary download-button";
-          download.href = `/api/uploads/${upload.id}/file`;
+          download.href = `/pharmacy-api/uploads/${upload.id}/file`;
           download.textContent = "Download";
           actions.appendChild(download);
         } else {
@@ -2525,7 +2526,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     button.disabled = true;
     showImportStatus(`Removing ${upload.filename}…`);
     try {
-      const response = await fetch(`/api/uploads/${upload.id}`, {method: "DELETE"});
+      const response = await fetch(`/pharmacy-api/uploads/${upload.id}`, {method: "DELETE"});
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "The stored report could not be removed.");
       await Promise.all([loadUploads(), loadDashboard()]);
@@ -2600,7 +2601,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
       range,
     );
   });
-  document.querySelectorAll(".module-tab").forEach(button => {
+  document.querySelectorAll(".module-tab[data-module]").forEach(button => {
     button.addEventListener("click", () => setDashboardModule(button.dataset.module));
   });
   byId("previewButton").addEventListener("click", previewFile);
